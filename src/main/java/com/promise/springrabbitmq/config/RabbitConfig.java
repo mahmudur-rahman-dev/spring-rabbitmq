@@ -42,9 +42,17 @@ public class RabbitConfig {
         return new Jackson2JsonMessageConverter();
     }
 
-    @Bean
+    @Bean("template")
     public AmqpTemplate template(ConnectionFactory connectionFactory) {
-        RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+        var rabbitTemplate = new RabbitTemplate(connectionFactory);
+        rabbitTemplate.setMessageConverter(messageConverter());
+        return rabbitTemplate;
+    }
+
+    @Bean("transactionalTemplate")
+    public AmqpTemplate transactionalTemplate(ConnectionFactory connectionFactory) {
+        var rabbitTemplate = new RabbitTemplate(connectionFactory);
+        rabbitTemplate.setChannelTransacted(true);
         rabbitTemplate.setMessageConverter(messageConverter());
         return rabbitTemplate;
     }
