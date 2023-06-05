@@ -13,12 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/employee")
 public class EmployeeController {
     private final EmployeeRepo repo;
+    public static final String ADDRESS = "Bashundhara Residential Area";
+    public static final String NAME = "Mahmudur Rahman";
 
     @GetMapping(path = "/")
     public ResponseEntity<EmployeeEntity> insertData() {
         var entity = EmployeeEntity.builder()
-                .address("Bashundhara Residential Area")
-                .name("Mahmudur Rahman Promise")
+                .address(ADDRESS)
+                .name(NAME)
                 .build();
         return ResponseEntity.ok(repo.save(entity));
     }
